@@ -1,0 +1,21 @@
+CREATE OR REPLACE FUNCTION obtem_periodo(data_in date)
+RETURNS numeric(5) AS $$
+DECLARE
+	mes smallint;
+	ano smallint;
+	resultado numeric(4,1);
+	
+BEGIN
+	SELECT EXTRACT(YEAR FROM data_in) into ano;
+	SELECT EXTRACT(MONTH FROM data_in) into mes;
+	
+	IF (mes <=6)THEN
+		resultado:=0.1;
+	ELSE
+		resultado:=0.2;
+	END IF;
+	
+	RETURN resultado+ano;
+END;
+$$ LANGUAGE plpgsql;
+	
