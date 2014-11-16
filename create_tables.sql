@@ -90,7 +90,7 @@ CREATE TABLE professor
 	References laboratorio (nome)
 	
 	data_ini_membro date	NOT NULL
-	data_fim_membro date	NOT NULL
+	data_fim_membro date	
 	
 };
 
@@ -132,7 +132,7 @@ CREATE TABLE bolsa
 	Constraint pk_aluno Primary Key (aluno)
 	
 	data_ini date	NOT NULL
-	data_fim date 	NOT NULL
+	data_fim date 	
 	
 };
 
@@ -153,7 +153,7 @@ CREATE TABLE monitoria
 	References disciplina (codigo)
 	
 	data_ini date	NOT NULL
-	data_fim date 	NOT NULL
+	data_fim date 	
 	
 };
 
@@ -174,7 +174,7 @@ CREATE TABLE estagiolab
 	Constraint pk_laboratorio Primary Key (laboratorio)
 	
 	data_ini date	NOT NULL
-	data_fim date 	NOT NULL
+	data_fim date 	
 };
 
 CREATE TABLE projetoorientado
