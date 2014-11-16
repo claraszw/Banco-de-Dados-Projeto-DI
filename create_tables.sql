@@ -35,7 +35,7 @@ CREATE TABLE posgrad
 	situacao  varchar(30)	NOT NULL,
 	
 	Constraint CKC_situacao_posgrad
-	Check (tipo IN ('doutorado','mestrado')),
+	Check (situacao IN ('afastou-se','em curso','atrasado','formando')),
 	
 	CPF		  numeric(11)	NOT NULL,
 	anotacao  varchar(200)	,
@@ -45,6 +45,11 @@ CREATE TABLE posgrad
 	periodoinicio   numeric(4,1)    NOT NULL,
 	estimativa 	    numeric(4,1)	NOT NULL,
 	status_matricula varchar(30)    NOT NULL,
+	
+	Constraint CKC_status_posgrad
+	Check (status_matricula IN ('prorrogação','marcou banca','matriculado',
+	'reabrindo','afastou-se','trancamento')),
+	
 	data_nascimento	 date		    NOT NULL,
 	sexo	  char(1)		NOT NULL,
 	
@@ -72,6 +77,10 @@ CREATE TABLE posgrad
 	num_agencia		numeric(4)		NOT NULL,
 	nome_agencia	varchar(30)		NOT NULL,
 	dedicacao		varchar(9)		NOT NULL,
+	
+	Constraint CKC_dedicacao_posgrad
+	Check (dedicacao IN ('parcial','exclusiva')),
+	
 	orientador		numeric(7),
 	
 	Constraint fk_orientador Foreign Key (orientador)
