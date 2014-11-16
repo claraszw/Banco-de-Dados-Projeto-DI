@@ -2,7 +2,7 @@ CREATE TABLE aluno
 {
 	matricula	numeric(7)	NOT NULL,
 	
-	Constraint pk_matricula Primary Key (matricula),
+	Constraint pk_aluno Primary Key (matricula),
 	
 	nome		varchar(50)	NOT NULL
 
@@ -12,7 +12,7 @@ CREATE TABLE grad
 {
 	matricula numeric(7)	NOT NULL,
 	
-	Constraint fk_matricula Foreign Key (matricula)
+	Constraint fk_graduacao Foreign Key (matricula)
 	References aluno (matricula),
 	
 	curso 	  varchar(30)	NOT NULL
@@ -23,7 +23,7 @@ CREATE TABLE posgrad
 {
 	matricula numeric(7)	NOT NULL,
 	
-	Constraint fk_matricula Foreign Key (matricula)
+	Constraint fk_posgrad_matricula Foreign Key (matricula)
 	References aluno (matricula),
 	
 	tipo	  varchar(9)	NOT NULL,
@@ -83,12 +83,12 @@ CREATE TABLE posgrad
 	
 	orientador		numeric(7),
 	
-	Constraint fk_orientador Foreign Key (orientador)
+	Constraint fk_posgrad_orientador Foreign Key (orientador)
 	References professor (matricula),
 	
 	coorientador	numeric(7)	NOT NULL,
 	
-	Constraint fk_coorientador Foreign Key (coorientador)
+	Constraint fk_posgrad_coorientador Foreign Key (coorientador)
 	References professor (matricula)
 	
 };
@@ -98,12 +98,12 @@ CREATE TABLE professor
 {
 	matricula	numeric(7)	NOT NULL,
 	
-	Constraint pk_matricula Primary Key (matricula),
+	Constraint pk_professor Primary Key (matricula),
 	
 	nome		varchar(50)	NOT NULL,
 	nome_lab	varchar(50)	NOT NULL,
 	
-	Constraint fk_nome_lab Foreign Key (nome_lab)
+	Constraint fk_professor_nome_lab Foreign Key (nome_lab)
 	References laboratorio (nome),
 	
 	data_ini_membro date	NOT NULL,
@@ -115,7 +115,7 @@ CREATE TABLE disciplina
 {
 	codigo 	char(7)	NOT NULL,
 	
-	Constraint pk_codigo Primary Key (codigo),
+	Constraint pk_disciplina Primary Key (codigo),
 	
 	nome	varchar(50)	NOT NULL
 	
@@ -125,12 +125,12 @@ CREATE TABLE laboratorio
 {
 	nome	varchar(50)	NOT NULL,
 	
-	Constraint pk_nome Primary Key (nome),
+	Constraint pk_laboratorio Primary Key (nome),
 	
 	area 	varchar(50)	NOT NULL,
 	responsavel numeric(7)	NOT NULL,
 	
-	Constraint fk_responsavel Foreign Key (responsavel)
+	Constraint fk_laboratorio_responsavel Foreign Key (responsavel)
 	References professor (matricula)
 	
 };
@@ -141,12 +141,12 @@ CREATE TABLE bolsa
 	
 	aluno   numeric(7)	NOT NULL,
 	
-	Constraint fk_aluno Foreign Key (aluno)
+	Constraint fk_bolsa_aluno Foreign Key (aluno)
 	References aluno (matricula),
 	
 	data_ini date	NOT NULL,
 	
-	Constraint pk_aluno_tipo_data_ini Primary Key (aluno,tipo,data_ini),
+	Constraint pk_bolsa Primary Key (aluno,tipo,data_ini),
 	
 	data_fim date 	
 	
@@ -156,17 +156,17 @@ CREATE TABLE monitoria
 {
 	aluno   numeric(7)	NOT NULL,
 	
-	Constraint fk_aluno Foreign Key (aluno)
+	Constraint fk_monitoria_aluno Foreign Key (aluno)
 	References aluno (matricula),
 	
 	codigo 	char(7)	NOT NULL,
 	
-	Constraint fk_codigo Foreign Key (codigo)
+	Constraint fk_monitoria_codigo Foreign Key (codigo)
 	References disciplina (codigo),
 	
 	data_ini date	NOT NULL,
 	
-	Constraint pk_codigo_aluno_data_ini Primary Key (codigo,aluno,data_ini),
+	Constraint pk_monitoria Primary Key (codigo,aluno,data_ini),
 	
 	data_fim date 	
 	
@@ -176,17 +176,17 @@ CREATE TABLE estagiolab
 {
 	aluno   numeric(7)	NOT NULL,
 	
-	Constraint fk_aluno Foreign Key (aluno)
+	Constraint fk_estagiolab_aluno Foreign Key (aluno)
 	References aluno (matricula),
 	
 	laboratorio	varchar(50)	NOT NULL,
 	
-	Constraint fk_laboratorio Foreign Key (laboratorio)
+	Constraint fk_estagiolab_laboratorio Foreign Key (laboratorio)
 	References laboratorio (nome),
 	
 	data_ini date	NOT NULL,
 	
-	Constraint pk_laboratorio_aluno_data_ini Primary Key (laboratorio,aluno,data_ini),
+	Constraint pk_estagiolab Primary Key (laboratorio,aluno,data_ini),
 	
 	data_fim date 	
 };
@@ -195,12 +195,12 @@ CREATE TABLE projetoorientado
 {
 	aluno   numeric(7)	NOT NULL,
 	
-	Constraint fk_aluno Foreign Key (aluno)
+	Constraint fk_projeto_orientado_aluno Foreign Key (aluno)
 	References aluno (matricula),
 	
 	codigo	char(7)		NOT NULL,
 	
-	Constraint pk_codigo_aluno Primary Key (codigo,aluno),
+	Constraint pk_projeto_orientado Primary Key (codigo,aluno),
 	
 	tema varchar(50)	NOT NULL,
 	numcred	numeric(2)	NOT NULL,
@@ -208,7 +208,7 @@ CREATE TABLE projetoorientado
 	periodo numeric(4,1)    NOT NULL,
 	matricula_prof numeric(7) NOT NULL,
 	
-	Constraint fk_matricula_prof Foreign Key (matricula_prof)
+	Constraint fk_projeto_orientado_matricula_prof Foreign Key (matricula_prof)
 	References professor (matricula)
 	
 };
