@@ -1,0 +1,12 @@
+CREATE OR REPLACE FUNCTION finaliza_monitorias()
+RETURNS void AS $$
+	
+BEGIN
+	
+	UPDATE monitoria
+	SET data_fim=current_date
+	WHERE data_fim IS NULL;
+	
+END;
+$$ LANGUAGE plpgsql;
+
