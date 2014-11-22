@@ -56,6 +56,7 @@ create view alunos_pos as
 	SELECT nome
 	FROM professor
 	WHERE matricula IN
+	(
             (SELECT P.matricula
             FROM professor as P, posgrad as PG
             WHERE PG.coorientador=P.matricula)
@@ -63,6 +64,7 @@ create view alunos_pos as
             (SELECT P.matricula
             FROM professor as P, posgrad as PG
             WHERE PG.orientador=P.matricula)
+	)
  )
  
  create view monitores_progI as
