@@ -104,7 +104,7 @@ CREATE TABLE professor
 	nome_lab	varchar(50),
 	
 
-	data_ini_membro date	NOT NULL,
+	data_ini_membro date	,
 	data_fim_membro date
 	
 );

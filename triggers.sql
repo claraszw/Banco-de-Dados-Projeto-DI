@@ -37,7 +37,7 @@ $tg_chk_dedicacao$ LANGUAGE plpgsql;*/
 
 
 -- ******************************************************
-
+/*
 CREATE TRIGGER tg_chk_monitoria BEFORE INSERT OR UPDATE ON monitoria
 FOR EACH ROW EXECUTE PROCEDURE chk_monitoria();
 
@@ -45,31 +45,26 @@ CREATE OR REPLACE FUNCTION chk_monitoria()
 RETURNS TRIGGER AS $tg_chk_monitoria$
 DECLARE 
 	aluno monitoria.aluno%TYPE;
-	data_fim monitoria.data_fim%TYPE;
 BEGIN
-	SELECT monitoria.aluno into aluno, monitoria.data_fim into data_fim
+	SELECT monitoria.aluno into aluno
 	FROM monitoria
 	WHERE monitoria.data_fim>new.data_ini
 	OR monitoria.data_fim is NULL;
 	
 	IF aluno IS NOT NULL THEN
-		IF data_fim IS NULL THEN
-				RAISE EXCEPTION 'Aluno % já possui uma monitoria em andamento.', new.aluno;
-		ELSE
-				RAISE EXCEPTION 'Aluno % possuia uma monitoria até %',data_fim;
-		END IF;
+		RAISE EXCEPTION 'Aluno % já possui/possuia uma monitoria em andamento.', new.aluno;
 		RETURN NULL;
 	END IF;
 	
 
 	RETURN NEW;
 END;
-$tg_chk_monitoria$ LANGUAGE plpgsql;
+$tg_chk_monitoria$ LANGUAGE plpgsql;*/
 
 --********************************************************
 
 -- ******************************************************
-
+/*
 CREATE TRIGGER tg_chk_estagiolab BEFORE INSERT OR UPDATE ON estagiolab
 FOR EACH ROW EXECUTE PROCEDURE chk_estagiolab();
 
@@ -84,12 +79,12 @@ BEGIN
 	OR estagiolab.data_fim is NULL;
 	
 	IF aluno IS NOT NULL THEN
-		RAISE EXCEPTION 'Aluno % já possui um estagio em laboratorio.', new.aluno;
+		RAISE EXCEPTION 'Aluno % já possui/possuia um estagio em laboratorio em andamento.', new.aluno;
 		RETURN NULL;
 	END IF;
 	
 
 	RETURN NEW;
 END;
-$tg_chk_estagiolab$ LANGUAGE plpgsql;
+$tg_chk_estagiolab$ LANGUAGE plpgsql;*/
 
