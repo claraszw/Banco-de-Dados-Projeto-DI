@@ -77,4 +77,27 @@ create view alunos_pos as
             )
  )
  
+ create view monitor_eou_estagiario as
+ (
+	SELECT aluno
+	FROM monitoria
+	UNION (
+	SELECT aluno
+	FROM estagiolab
+	)
+ )
  
+ create view projeto2014 as
+ (
+	SELECT P.matricula, P.nome
+
+	FROM professor as P
+
+	WHERE EXISTS ( SELECT *
+
+	FROM projetoorientado as PJO
+
+	WHERE PJO.matricula_prof = P.matricula
+
+	AND PJO.periodo=2014.1 )
+ )
