@@ -40,6 +40,10 @@ CREATE TABLE posgrad
 	CPF		  numeric(11)	NOT NULL,
 	anotacao  varchar(200)	,
 	email 	  varchar(30)	NOT NULL,
+	
+	Constraint CKC_email 
+	CHECK (email like ('%@inf.puc-rio.br')),
+	
 	login	  varchar(20)	NOT NULL,
 	lattes	  varchar(50)	NOT NULL,
 	periodoinicio   numeric(4,1)    NOT NULL,
@@ -86,7 +90,7 @@ CREATE TABLE posgrad
 	Constraint fk_posgrad_orientador Foreign Key (orientador)
 	References professor (matricula),
 	
-	coorientador	numeric(7)	NOT NULL,
+	coorientador	numeric(7),
 	
 	Constraint fk_posgrad_coorientador Foreign Key (coorientador)
 	References professor (matricula)
