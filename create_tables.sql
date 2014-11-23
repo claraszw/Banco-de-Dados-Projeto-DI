@@ -55,6 +55,7 @@ CREATE TABLE posgrad
 	
 	lattes	  varchar(50)	NOT NULL,
 	
+	CONSTRAINT CKC_lattes CHECK (lattes like ('http://lattes.cnpq.br/%')),
 	CONSTRAINT UNI_lattes UNIQUE (lattes),
 	
 	periodoinicio   numeric(5,1)    NOT NULL,
