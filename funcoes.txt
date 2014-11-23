@@ -24,11 +24,11 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION obtem_matriculados (periodo posgrad.periodoinicio%TYPE , tipopg posgrad.tipo%TYPE)
 RETURNS bigint as $$
 DECLARE
-	numero bigint;
+	numero int;
 BEGIN
 	SELECT COUNT (*) into numero
 	FROM posgrad
-	WHERE posgrad.periodoinicio like periodo AND posgrad.tipo like tipopg;
+	WHERE posgrad.periodoinicio = periodo AND posgrad.tipo = tipopg;
 	
 	RETURN numero;  
 END;

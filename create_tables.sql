@@ -25,6 +25,7 @@ CREATE TABLE posgrad
 	
 	Constraint fk_posgrad_matricula Foreign Key (matricula)
 	References aluno (matricula),
+	CONSTRAINT pk_posgrad Primary Key (matricula),
 	
 	tipo	  varchar(9)	NOT NULL,
 	
@@ -32,12 +33,16 @@ CREATE TABLE posgrad
 	Check (tipo IN ('doutorado','mestrado')),
 	
 	area	  varchar(50)	NOT NULL,
-	situacao  varchar(30)	NOT NULL,
+	situacao  varchar(10)	NOT NULL,
 	
 	Constraint CKC_situacao_posgrad
 	Check (situacao IN ('afastou-se','em curso','atrasado','formando')),
 	
-	CPF		  numeric(11)	NOT NULL,
+	CPF		  char(14)	NOT NULL,
+	
+	CONSTRAINT CKC_cpf CHECK (cpf like ('___.___.___-__')),
+	CONSTRAINT UNI_cpf UNIQUE (cpf),
+	
 	anotacao  varchar(200)	,
 	email 	  varchar(30)	NOT NULL,
 	
@@ -45,10 +50,16 @@ CREATE TABLE posgrad
 	CHECK (email like ('%@inf.puc-rio.br')),
 	
 	login	  varchar(20)	NOT NULL,
+	
+	CONSTRAINT UNI_login UNIQUE (login),
+	
 	lattes	  varchar(50)	NOT NULL,
-	periodoinicio   numeric(4,1)    NOT NULL,
-	estimativa 	    numeric(4,1)	NOT NULL,
-	status_matricula varchar(30)    NOT NULL,
+	
+	CONSTRAINT UNI_lattes UNIQUE (lattes),
+	
+	periodoinicio   numeric(5,1)    NOT NULL,
+	estimativa 	    numeric(5,1)	NOT NULL,
+	status_matricula varchar(12)    NOT NULL,
 	
 	Constraint CKC_status_posgrad
 	Check (status_matricula IN ('prorrogação','marcou banca','matriculado',
@@ -66,7 +77,7 @@ CREATE TABLE posgrad
 	naturalidade	varchar(30)		NOT NULL,
 	id				varchar(10),
 	orgao_emissor	varchar(30),
-	data_emissao	varchar(30),
+	data_emissao	date,
 	num_passaporte  varchar(20),
 	pais_passaporte	varchar(30),	
 	validade_passaporte date,
@@ -209,8 +220,8 @@ CREATE TABLE projetoorientado
 	
 	tema varchar(50)	NOT NULL,
 	numcred	numeric(2)	NOT NULL,
-	nota	numeric(2,1) NOT NULL,
-	periodo numeric(4,1)    NOT NULL,
+	nota	numeric(3,1) NOT NULL,
+	periodo numeric(5,1)    NOT NULL,
 	matricula_prof numeric(7) NOT NULL,
 	
 	Constraint fk_projeto_orientado_matricula_prof Foreign Key (matricula_prof)

@@ -141,18 +141,21 @@ END;
 $tg_chk_estagiolab_update$ LANGUAGE plpgsql;*/
 
 -- ******************************************************
-/*
+
 CREATE TRIGGER tg_chk_brasileiro BEFORE INSERT OR UPDATE ON posgrad
 FOR EACH ROW EXECUTE PROCEDURE chk_brasileiro();
 
 
 CREATE OR REPLACE FUNCTION chk_brasileiro() 
 RETURNS TRIGGER AS $tg_chk_brasileiro$
-
+DECLARE 
+	nacionalidade posgrad.nacionalidade%TYPE;
 BEGIN
+	SELECT posgrad.nacionalidade INTO nacionalidade
+	FROM posgrad
+	WHERE new.matricula=posgrad.matricula;
 	
-	
-	IF lower(new.nacionalidade)='brasileir_' THEN
+	IF lower(new.nacionalidade) like 'brasileir_' OR lower(nacionalidade) like 'brasileir_' THEN
 		IF new.id IS NULL THEN
 			RAISE EXCEPTION 'Aluno % brasileiro precisa de um número de id.', new.matricula;
 			RETURN NULL;
@@ -184,7 +187,7 @@ RETURNS TRIGGER AS $tg_chk_estrangeiro$
 BEGIN
 	
 	
-	IF lower(new.nacionalidade)!='brasileir_' THEN
+	IF lower(new.nacionalidade) not like 'brasileir_' THEN
 		IF new.num_passaporte IS NULL THEN
 			RAISE EXCEPTION 'Aluno % estrangeiro precisa de um número de passaporte.', new.matricula;
 			RETURN NULL;
