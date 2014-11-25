@@ -10,3 +10,26 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+
+CREATE OR REPLACE FUNCTION relatorio_satus()
+RETURNS void as $$
+DECLARE
+	status varchar(12);
+	num int;	
+	tuplas cursor is
+		SELECT posgrad.status_matricula, count(*)
+		FROM posgrad
+		GROUP BY posgrad.status_matricula;
+BEGIN
+	OPEN tuplas;
+	RAISE INFO 'STATUS DA MATRICULA - QUANTIDADE';
+	loop
+		fetch tuplas into status, num;
+		if not found then exit;
+		end if;
+		RAISE INFO '% - %', status, num;
+	end loop;
+	CLOSE tuplas;
+END;
+$$ LANGUAGE plpgsql;
+		
