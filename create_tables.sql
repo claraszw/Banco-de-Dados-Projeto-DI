@@ -36,7 +36,7 @@ CREATE TABLE posgrad
 	situacao  varchar(10)	NOT NULL,
 	
 	Constraint CKC_situacao_posgrad
-	Check (situacao IN ('afastou-se','em curso','atrasado','formando')),
+	Check (situacao IN ('afastou-se','em curso','atrasado','formando','formado')),
 	
 	CPF		  char(14)	NOT NULL,
 	
@@ -64,7 +64,7 @@ CREATE TABLE posgrad
 	
 	Constraint CKC_status_posgrad
 	Check (status_matricula IN ('prorrogação','marcou banca','matriculado',
-	'reabrindo','afastou-se','trancamento')),
+	'reabrindo','afastou-se','trancamento','formado')),
 	
 	data_nascimento	 date		    NOT NULL,
 	sexo	  char(1)		NOT NULL,

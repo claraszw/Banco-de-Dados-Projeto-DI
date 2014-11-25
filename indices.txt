@@ -1,0 +1,5 @@
+Para o nosso banco de dados, prevemos que a maior parte das consultas seram feitas sobre matriculas e códigos de discilinas, os quais já são indexados implicitamente por serem chaves primárias. Na tabela posgrad, o CPF, link do currículo Lattes e login, também já possuem índices por serem UNIQUE. Analisamos que outras consultas que podem vir a ser relevantes são aquelas em cima da situação ou sttatus da matrícula de um pós-graduando e sobre as disciplinas de monitoria, assim criamos também os seguintes índices:
+
+CREATE INDEX INX_situacao ON posgrad (situacao)
+CREATE INDEX INX_status ON posgrad (status_matricula)
+CREATE INDEX INX_discip_monitoria ON monitoria (codigo)
