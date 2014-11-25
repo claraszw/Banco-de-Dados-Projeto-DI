@@ -1,0 +1,9 @@
+SELECT aluno.matricula, aluno.nome, count(*)
+FROM aluno, monitoria
+WHERE aluno.matricula=monitoria.aluno
+AND EXISTS (SELECT * 
+			FROM monitoria
+			WHERE monitoria.aluno=aluno.matricula
+			AND monitoria.data_fim IS NULL)
+GROUP BY aluno.matricula, aluno.nome
+HAVING count(*)>1

@@ -48,9 +48,10 @@ DECLARE
 BEGIN
 	SELECT monitoria.aluno into aluno
 	FROM monitoria
-	WHERE monitoria.data_fim>new.data_ini
-	OR monitoria.data_fim is NULL
-	AND new.aluno = monitoria.aluno;
+	WHERE new.aluno = monitoria.aluno
+	AND (monitoria.data_fim>new.data_ini
+	OR monitoria.data_fim is NULL);
+	
 	
 	IF aluno IS NOT NULL THEN
 		RAISE EXCEPTION 'Aluno % já possui/possuia uma monitoria em andamento.', new.aluno;
@@ -74,9 +75,9 @@ DECLARE
 BEGIN
 	SELECT monitoria.aluno into aluno
 	FROM monitoria
-	WHERE monitoria.data_fim>new.data_ini
-	AND monitoria.data_ini!=new.data_ini
-	AND new.aluno = monitoria.aluno;
+	WHERE new.aluno = monitoria.aluno
+	AND monitoria.data_fim>new.data_ini
+	AND monitoria.data_ini!=new.data_ini;
 	
 	IF aluno IS NOT NULL THEN
 		RAISE EXCEPTION 'Aluno % já possui/possuia uma monitoria em andamento.', new.aluno;
@@ -100,9 +101,9 @@ DECLARE
 BEGIN
 	SELECT estagiolab.aluno into aluno	
 	FROM estagiolab
-	WHERE estagiolab.data_fim>new.data_ini
-	OR estagiolab.data_fim is NULL
-	AND new.aluno=estagiolab.aluno;
+	WHERE new.aluno=estagiolab.aluno
+	AND (estagiolab.data_fim>new.data_ini
+	OR estagiolab.data_fim is NULL);
 	
 	IF aluno IS NOT NULL THEN
 		RAISE EXCEPTION 'Aluno % já possui/possuia um estagio em laboratorio em andamento.', new.aluno;
@@ -126,9 +127,9 @@ DECLARE
 BEGIN
 	SELECT estagiolab.aluno into aluno	
 	FROM estagiolab
-	WHERE estagiolab.data_fim>new.data_ini
-	AND estagiolab.data_ini!=new.data_ini
-	AND new.aluno=estagiolab.aluno;
+	WHERE new.aluno=estagiolab.aluno
+	AND estagiolab.data_fim>new.data_ini
+	AND estagiolab.data_ini!=new.data_ini;
 	
 	IF aluno IS NOT NULL THEN
 		RAISE EXCEPTION 'Aluno % já possui/possuia um estagio em laboratorio em andamento.', new.aluno;
